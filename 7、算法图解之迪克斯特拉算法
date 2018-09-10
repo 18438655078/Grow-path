@@ -1,0 +1,43 @@
+一、迪克斯特拉算法
+        1、迪克斯特拉算法用于找到最快的、而广度优先搜索算法用于找到最近的。
+        2、迪克斯特拉算法的步骤
+            a) 找出“最便宜”的节点，即可在最短时间内到达的节点。
+            b) 更新该节点的邻居的开销，检查是否有前往它们的更短路径，如果有，就更新其开销。
+            c) 重复这个过程，直到对图中的每个节点都这样做了。
+            d) 计算最终路径。
+        3、术语
+            a) 权重：每条边都有关联的数字，该数字称为权重。
+            b) 加权图：带权重的图成为加权图，不带的称为非加权图。
+        4、狄克斯特拉算法只适用于有向无环图。
+        5、是狄克斯特拉算法背后的关键理念：找出图中最便宜的节点，并确保没有到该节点的更便宜的路径！
+        6、不能将狄克斯特拉算法用于包含负权边的图。因为狄克斯特拉算法这样假设：对于处理过的海报节点，没有前往该节点的更短路径。这种假设仅在没有负权边时才成立。
+        7、代码1
+            # 迪克斯特拉算法
+            node = find_lowest_cost_node(costs)   # 在未处理的节点中找出开销最小的节点
+            while node is not None:   # 这个while循环在所有节点都被处理过后结束
+                cost = costs[node]    # 开销
+                neighbors = graph[node]   # 邻居列表
+                for n in neighbors.keys():    # 遍历当前节点的所有邻居
+                    new_cost = cost + neighbors[n]    # 新的开销总额
+                    if costs[n] > new_cost:   # 如果经当前节点前往该邻居更近，就更新该邻居的开销
+                        costs[n] = new_cost
+                        parents[n] = node   # 将该邻居的父节点设置为当前节点
+                processed.append(node)    # 将当前节点标记为处理过
+                node = find_lowest_cost_node(costs)   # 找出接下来要处理的节点，并循环
+          代码2
+            # 函数find_lowest_cost_node找出开销最低的节点的代码
+            def find_lowest_cost_node(costs):
+                lowest_cost = float("inf")
+                lowest_cost_node = None
+                for node in costs:
+                    cost = costs[node]
+                    if cost < lowest_cost and node not in processed:
+                        lowest_cost = cost
+                        lowest_cost_node = node
+                return lowest_cost_node
+        8、小结
+        a)广度优先搜索用于在非加权图中查找最短路径。
+        b)狄克斯特拉算法用于在加权图中查找最短路径。
+        c)仅当权重为正时狄克斯特拉算法才管用。
+        d)如果图中包含负权边，请使用贝尔曼-福德算法。
+        
