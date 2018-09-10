@@ -1,0 +1,37 @@
+一、广度优先搜索：让你能够找出两样东西之间的最短距离。是一种用于图的查找算法。
+        1、步骤：
+            a) 使用图来建立问题模型。
+            b) 使用广度优先搜索解决问题。
+        2、使用情形。
+            a)第一类问题：从节点A出发，有前往节点B的路径吗？
+            b)第二类问题：从节点A出发，前往节点B的哪条路径最短？
+        3、队列概念
+            和堆栈不同，堆栈是先进后出，而队列是先进先出。
+        4、搜索代码
+            # 广度优先搜索
+            def search(name):
+                search_queue = deque()    # 创建一个队列
+                search_queue += graph[name]   # 将这个人的邻居添加到队列中
+                searched = []   # 创建一个列表用于存放已经检查过的person
+                while search_queue:   # 当队列不为空时
+                    person = search_queue.popleft()   # 弹出最左边的person
+                    if not person in searched:    # 检查该人是否在列表中，如果不在，继续
+                        if person_is_seller(person):    # 如果找到了返回True
+                            print(person + "is a mango seller!")
+                            return True
+                        else: 
+                            search_queue += graph[person]   # 如果不是的话将此人的邻居添加到队列中
+                            searched.append(person)   # 将此人加入到检查过的列表中
+                return False    # 如果都没有返回False
+            search('name')
+        5、广度优先搜索的运行时间：O(V+E)    V是顶点数，E是边数。
+        6、小结
+        a)广度优先搜索指出是否有从A到B的路径。
+        b)如果有，广度优先搜索将找出最短路径。
+        c)面临类似于寻找最短路径的问题时，可尝试使用图来建立模型，再使用广度优先搜索来解决问题。
+        d)有向图中的边为箭头，箭头的方向指定了关系的方向，例如，rama→adit表示rama欠adit钱。
+        e)无向图中的边不带箭头，其中的关系是双向的，例如，ross - rachel表示“ross与rachel约会，而rachel也与ross约会”。
+        f)队列是先进先出（FIFO）的。
+        g)栈是后进先出（LIFO）的。
+        h)你需要按加入顺序检查搜索列表中的人，否则找到的就不是最短路径，因此搜索列表必须是队列。
+        i)对于检查过的人，务必不要再去检查，否则可能导致无限循环。
